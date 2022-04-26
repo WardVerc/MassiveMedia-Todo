@@ -12,9 +12,7 @@ const List: React.FC<ListProps> = ({ list, navigation }) => {
   return (
     <View
       style={styles.container}
-      onTouchEnd={() =>
-        navigation.navigate("ListDetails", { listId: list.listId })
-      }
+      onTouchEnd={() => navigation.navigate("ListDetails", { list: list })}
     >
       <Text>{list.title}</Text>
       <Text>{list.description}</Text>

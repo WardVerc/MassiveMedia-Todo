@@ -1,16 +1,12 @@
 import { useState } from "react";
 
-export interface CreateListType {
-  listId: number;
-}
-
-const useList = () => {
+const useDeleteList = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // createList() gives a warning "can't perform a react state update on an unmounted component"
+  // deleteList() gives a warning "can't perform a react state update on an unmounted component"
   // was happening when trying to catch errors
-  const createList = async (title: string, description: string) => {
+  const deleteList = async (listId: number) => {
     setError("");
     setLoading(true);
     await fetch("https://mm-todolist.herokuapp.com/graphql", {
@@ -18,18 +14,16 @@ const useList = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
-      mutation { 
-          createList(title: "${title}", description: "${description}") {
-           listId
-         }  
-         }`,
+        mutation { 
+            deleteList(listId: ${listId}) 
+           }`,
       }),
     }).then((response) => response.json());
     // .catch((err) => setError(err.message)); gives problems
     setLoading(false);
   };
 
-  return { isLoading, error, createList };
+  return { isLoading, error, deleteList };
 };
 
-export default useList;
+export default useDeleteList;
