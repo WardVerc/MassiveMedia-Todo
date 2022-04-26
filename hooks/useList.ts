@@ -6,8 +6,12 @@ export interface CreateListType {
 
 const useList = () => {
   const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // createList() gives a warning "can't perform a react state update on an unmounted component"
+  // was happening when trying to catch errors
   const createList = async (title: string, description: string) => {
+    setError("");
     setLoading(true);
     await fetch("https://mm-todolist.herokuapp.com/graphql", {
       method: "POST",
@@ -20,17 +24,12 @@ const useList = () => {
          }  
          }`,
       }),
-    })
-      // TODO: error handling
-      .then((response) => response.json())
-      // Need to return something ?
-      .then((data) => {
-        return data.data.createList;
-      });
+    }).then((response) => response.json());
+    // .catch((err) => setError(err.message)); gives problems
     setLoading(false);
   };
 
-  return { isLoading, createList };
+  return { isLoading, error, createList };
 };
 
 export default useList;

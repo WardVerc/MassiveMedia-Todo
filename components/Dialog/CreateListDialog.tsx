@@ -16,28 +16,50 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { createList, isLoading } = useList();
+  const { createList, isLoading, error } = useList();
 
   const closeDialog = () => {
-    setVisible(false);
     setTitle("");
     setDescription("");
+    setVisible(false);
   };
 
   const handleAdd = async () => {
+    // add validation, min 3 char for title
     await createList(title, description);
-    getLists();
+    // if (!error) {
     closeDialog();
+    getLists();
   };
+
+  if (isLoading) {
+    return (
+      <View>
+        <Dialog.Container visible={visible}>
+          <Dialog.Description>Loading ...</Dialog.Description>
+        </Dialog.Container>
+      </View>
+    );
+  }
+
+  // can't figure out error handling for create list
+  if (error) {
+    return (
+      <View>
+        <Dialog.Container visible={visible}>
+          <Dialog.Description>
+            An error has occurred. Please try again.
+          </Dialog.Description>
+          <Dialog.Button label="Cancel" onPress={closeDialog} />
+        </Dialog.Container>
+      </View>
+    );
+  }
 
   return (
     <View>
       <Dialog.Container visible={visible}>
-        {/* TODO: return spinner if loading */}
         <Dialog.Title>Create a list</Dialog.Title>
-        <Dialog.Description>
-          Give it a creative title. And maybe a description aswel.
-        </Dialog.Description>
         <Dialog.Input value={title} label="Title" onChangeText={setTitle} />
         <Dialog.Input
           value={description}
