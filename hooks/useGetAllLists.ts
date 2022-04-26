@@ -28,9 +28,11 @@ export interface ListType {
 
 const useGetAllLists = () => {
   const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [lists, setLists] = useState<ListType[]>([]);
 
   const getLists = async () => {
+    setError("");
     setLoading(true);
     await fetch("https://mm-todolist.herokuapp.com/graphql", {
       method: "POST",
@@ -38,7 +40,8 @@ const useGetAllLists = () => {
       body: JSON.stringify({ query: GET_ALL_LISTS }),
     })
       .then((response) => response.json())
-      .then((data) => setLists(data.data.getAllLists));
+      .then((data) => setLists(data.data.getAllLists))
+      .catch((err) => setError(err.message));
     setLoading(false);
   };
 
@@ -46,7 +49,7 @@ const useGetAllLists = () => {
     getLists();
   }, []);
 
-  return { isLoading, lists, getLists };
+  return { isLoading, error, lists, getLists };
 };
 
 export default useGetAllLists;
