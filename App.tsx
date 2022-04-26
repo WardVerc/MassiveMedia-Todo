@@ -6,10 +6,11 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import ListDetails from "./components/ListDetails/ListDetails";
+import { ListType } from "./hooks/useGetAllLists";
 
 export type StackParamList = {
   Lists: undefined;
-  ListDetails: { listId: number };
+  ListDetails: { list: ListType };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

@@ -3,7 +3,30 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    width: "100%",
+  },
+  header: {
+    padding: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  itemsContainer: {
+    padding: 10,
+  },
+  headerText: {
+    fontSize: 20,
+  },
+  actionsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "25%",
+  },
+  icon: {
+    textAlignVertical: "center",
+    textAlign: "center",
+    borderWidth: 3,
+    borderRadius: 5,
   },
 });

@@ -5,7 +5,7 @@ import { styles } from "./Header.styles";
 const Header: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text>Welcome, Massive Media!</Text>
+      <Text style={styles.headerText}>Hello, Massive Media!</Text>
     </View>
   );
 };

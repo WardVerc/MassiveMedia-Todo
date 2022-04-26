@@ -57,7 +57,7 @@ const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
             );
           })}
         </ScrollView>
-        <Button title="Add a list man" onPress={() => handlePress()} />
+        <Button title="Add a list" onPress={() => handlePress()} />
       </View>
     </View>
   );
