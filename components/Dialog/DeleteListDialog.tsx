@@ -1,35 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import Dialog from "react-native-dialog";
-import useCreateList from "../../hooks/useCreateList";
+import useDeleteList from "../../hooks/useDeleteList";
 
-interface CreateListDialogProps {
+interface DeleteListDialogProps {
   visible: boolean;
   setVisible: (bool: boolean) => void;
-  getLists: () => void;
+  listId: number;
 }
 
-const CreateListDialog: React.FC<CreateListDialogProps> = ({
+const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
   visible,
   setVisible,
-  getLists,
+  listId,
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const { createList, isLoading, error } = useCreateList();
+  const { deleteList, isLoading, error } = useDeleteList();
 
   const closeDialog = () => {
-    setTitle("");
-    setDescription("");
     setVisible(false);
   };
 
-  const handleAdd = async () => {
-    // add validation, min 3 char for title
-    await createList(title, description);
+  const handleDelete = async () => {
+    await deleteList(listId);
     // if (!error) {
     closeDialog();
-    getLists();
   };
 
   if (isLoading) {
@@ -42,7 +36,6 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
     );
   }
 
-  // can't figure out error handling for create list
   if (error) {
     return (
       <View>
@@ -59,18 +52,15 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
   return (
     <View>
       <Dialog.Container visible={visible}>
-        <Dialog.Title>Create a list</Dialog.Title>
-        <Dialog.Input value={title} label="Title" onChangeText={setTitle} />
-        <Dialog.Input
-          value={description}
-          label="Description"
-          onChangeText={setDescription}
-        />
+        <Dialog.Title>Delete list</Dialog.Title>
+        <Dialog.Description>
+          Are you sure you want to delete?
+        </Dialog.Description>
         <Dialog.Button label="Cancel" onPress={closeDialog} />
-        <Dialog.Button label="Add" onPress={handleAdd} />
+        <Dialog.Button label="Yes" onPress={handleDelete} />
       </Dialog.Container>
     </View>
   );
 };
 
-export default CreateListDialog;
+export default DeleteListDialog;
