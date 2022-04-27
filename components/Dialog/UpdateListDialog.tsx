@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Dialog from "react-native-dialog";
-import useUpdateList from "../../hooks/useUpdateList";
+import useUpdateList from "../../hooks/list/useUpdateList";
 
 interface UpdateListDialogProps {
   visible: boolean;

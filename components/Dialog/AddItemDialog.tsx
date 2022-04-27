@@ -1,32 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import Dialog from "react-native-dialog";
-import useDeleteList from "../../hooks/list/useDeleteList";
+import useAddItem from "../../hooks/item/useAddItem";
 
-interface DeleteListDialogProps {
+interface AddItemDialogProps {
   visible: boolean;
   setVisible: (bool: boolean) => void;
   listId: number;
-  navigateToLists: () => void;
 }
 
-const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
+const AddItemDialog: React.FC<AddItemDialogProps> = ({
   visible,
   setVisible,
   listId,
-  navigateToLists,
 }) => {
-  const { deleteList, isLoading, error } = useDeleteList();
+  const [description, setDescription] = useState("");
+  const { addItem, isLoading, error } = useAddItem();
 
   const closeDialog = () => {
+    setDescription("");
     setVisible(false);
   };
 
-  const handleDelete = async () => {
-    await deleteList(listId);
+  const handleAdd = async () => {
+    await addItem(listId, description);
     // if (!error) {
     closeDialog();
-    navigateToLists();
   };
 
   if (isLoading) {
@@ -39,6 +38,7 @@ const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
     );
   }
 
+  // can't figure out error handling for create list
   if (error) {
     return (
       <View>
@@ -55,15 +55,17 @@ const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
   return (
     <View>
       <Dialog.Container visible={visible}>
-        <Dialog.Title>Delete list</Dialog.Title>
-        <Dialog.Description>
-          Are you sure you want to delete?
-        </Dialog.Description>
+        <Dialog.Title>Add an item</Dialog.Title>
+        <Dialog.Input
+          value={description}
+          label="Description"
+          onChangeText={setDescription}
+        />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
-        <Dialog.Button label="Yes" onPress={handleDelete} />
+        <Dialog.Button label="Add" onPress={handleAdd} />
       </Dialog.Container>
     </View>
   );
 };
 
-export default DeleteListDialog;
+export default AddItemDialog;
