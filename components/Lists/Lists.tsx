@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, ScrollView, Text, View } from "react-native";
 import { styles } from "./Lists.styles";
@@ -15,6 +15,12 @@ const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
   const handlePress = () => {
     setVisible(true);
   };
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      getLists();
+    });
+  }, [navigation]);
 
   if (isLoading) {
     return (

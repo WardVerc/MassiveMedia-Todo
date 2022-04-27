@@ -7,12 +7,14 @@ interface DeleteListDialogProps {
   visible: boolean;
   setVisible: (bool: boolean) => void;
   listId: number;
+  navigateToLists: () => void;
 }
 
 const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
   visible,
   setVisible,
   listId,
+  navigateToLists,
 }) => {
   const { deleteList, isLoading, error } = useDeleteList();
 
@@ -24,6 +26,7 @@ const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
     await deleteList(listId);
     // if (!error) {
     closeDialog();
+    navigateToLists();
   };
 
   if (isLoading) {
