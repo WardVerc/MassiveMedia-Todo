@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Dialog from "react-native-dialog";
-import useCreateList from "../../hooks/useCreateList";
+import useCreateList from "../../hooks/list/useCreateList";
 
 interface CreateListDialogProps {
   visible: boolean;

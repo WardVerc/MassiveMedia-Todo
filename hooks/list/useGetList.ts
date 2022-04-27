@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ListType } from "./useGetAllLists";
+import { ListType } from "../useGetAllLists";
 
 const emptyList = {
   title: "",

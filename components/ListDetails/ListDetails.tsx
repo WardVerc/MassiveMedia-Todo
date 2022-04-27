@@ -1,22 +1,29 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import { styles } from "./ListDetails.styles";
 import { ListDetailsNavigationProps } from "../../App";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import DeleteListDialog from "../Dialog/DeleteListDialog";
 import UpdateListDialog from "../Dialog/UpdateListDialog";
-import useGetList from "../../hooks/useGetList";
+import useGetList from "../../hooks/list/useGetList";
+import AddItemDialog from "../Dialog/AddItemDialog";
+import Item from "../Item/Item";
 
 const ListDetails: React.FC<ListDetailsNavigationProps> = ({
   navigation,
   route,
 }) => {
+  const [isAddItemVisible, setIsAddItemVisible] = useState(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
   const [isUpdateVisible, setIsUpdateVisible] = useState(false);
   const { list, getList, isLoading, error } = useGetList(
     route.params.list.listId
   );
   const { title, description, items } = list;
+
+  const handlePress = () => {
+    setIsAddItemVisible(true);
+  };
 
   const renderDialogs = () => {
     return (
@@ -34,6 +41,11 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
           setVisible={setIsDeleteVisible}
           listId={route.params.list.listId}
           navigateToLists={() => navigation.navigate("Lists")}
+        />
+        <AddItemDialog
+          visible={isAddItemVisible}
+          setVisible={setIsAddItemVisible}
+          listId={route.params.list.listId}
         />
       </>
     );
@@ -81,9 +93,11 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
         </View>
       </View>
       <View style={styles.itemsContainer}>
-        <Text>Item</Text>
-        <Text>Item</Text>
+        {items.map((item) => {
+          return <Item item={item} key={item.itemId} />;
+        })}
       </View>
+      <Button title="Add an item" onPress={() => handlePress()} />
     </View>
   );
 };
