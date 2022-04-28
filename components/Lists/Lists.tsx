@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Button, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { styles } from "./Lists.styles";
 import CreateListDialog from "../Dialog/CreateListDialog";
 import ListsHeader from "./ListsHeader/ListsHeader";
 import List from "../List/List";
 import useGetAllLists from "../../hooks/useGetAllLists";
 import { ListsNavigationProps } from "../../App";
+import AddListButton from "../List/AddListButton/AddListButton";
 
 const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
@@ -61,8 +62,8 @@ const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
               />
             );
           })}
+          <AddListButton createList={handlePress} />
         </ScrollView>
-        <Button title="Add a list" onPress={() => handlePress()} />
       </View>
     </View>
   );

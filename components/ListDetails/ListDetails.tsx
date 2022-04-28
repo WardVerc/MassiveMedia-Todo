@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { styles } from "./ListDetails.styles";
 import { ListDetailsNavigationProps } from "../../App";
 import DeleteListDialog from "../Dialog/DeleteListDialog";
@@ -8,6 +8,7 @@ import useGetList from "../../hooks/list/useGetList";
 import AddItemDialog from "../Dialog/AddItemDialog";
 import Item from "../Item/Item";
 import ListDetailsHeader from "./ListDetailsHeader/ListDetailsHeader";
+import AddItemButton from "../Item/AddItemButton/AddItemButton";
 
 const ListDetails: React.FC<ListDetailsNavigationProps> = ({
   navigation,
@@ -91,7 +92,9 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
           );
         })}
       </ScrollView>
-      <Button title="Add an item" onPress={() => handlePress()} />
+      <View style={styles.buttonContainer}>
+        <AddItemButton createList={handlePress} />
+      </View>
     </View>
   );
 };

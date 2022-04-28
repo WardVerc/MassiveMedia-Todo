@@ -22,9 +22,14 @@ const List: React.FC<ListProps> = ({ list, navigation }) => {
       style={styles.container}
       onTouchEnd={() => navigation.navigate("List details", { list: list })}
     >
-      <Text>{list.title}</Text>
-      <Text>{list.description}</Text>
-      {list.items.length > 0 ? <Text>{totalItemsMarked()}</Text> : undefined}
+      <View>
+        <Text style={styles.title}>{list.title}</Text>
+        <Text style={styles.description}>{list.description}</Text>
+      </View>
+
+      {list.items.length > 0 ? (
+        <Text style={styles.itemsMarked}>{totalItemsMarked()}</Text>
+      ) : undefined}
     </View>
   );
 };

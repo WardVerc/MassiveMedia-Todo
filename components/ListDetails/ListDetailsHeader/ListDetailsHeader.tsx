@@ -24,13 +24,11 @@ const ListDetailsHeader: React.FC<ListDetailsHeaderProps> = ({
       </View>
       <View style={styles.actionsContainer}>
         <MaterialIcons
-          style={styles.icon}
           name="edit"
           size={30}
           onPress={() => setIsUpdateVisible(true)}
         />
         <MaterialIcons
-          style={styles.icon}
           name="delete"
           size={30}
           onPress={() => setIsDeleteVisible(true)}
