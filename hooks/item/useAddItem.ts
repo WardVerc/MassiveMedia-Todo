@@ -10,8 +10,6 @@ const useAddItem = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // addItem() gives a warning "can't perform a react state update on an unmounted component"
-  // was happening when trying to catch errors
   const addItem = async (listId: number, description: string) => {
     setError("");
     setLoading(true);
@@ -29,8 +27,9 @@ const useAddItem = () => {
          }
          }`,
       }),
-    }).then((response) => response.json());
-    // .catch((err) => setError(err.message)); gives problems
+    })
+      .then((response) => response.json())
+      .catch((err) => setError(err.message));
     setLoading(false);
   };
 

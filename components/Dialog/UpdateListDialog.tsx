@@ -35,11 +35,15 @@ const UpdateListDialog: React.FC<UpdateListDialogProps> = ({
   };
 
   const handleEdit = async () => {
-    // add validation, min 3 char for title
-    await updateList(listId, title, description);
-    // if (!error) {
-    getList(listId);
-    closeDialog();
+    if (title.trim().length > 0) {
+      await updateList(listId, title.trim(), description.trim());
+      // if (!error) {
+      getList(listId);
+      closeDialog();
+      // }
+    } else {
+      alert("Enter a title");
+    }
   };
 
   if (isLoading) {
@@ -70,11 +74,17 @@ const UpdateListDialog: React.FC<UpdateListDialogProps> = ({
     <View>
       <Dialog.Container visible={visible}>
         <Dialog.Title>Update list</Dialog.Title>
-        <Dialog.Input value={title} label="Title" onChangeText={setTitle} />
+        <Dialog.Input
+          value={title}
+          label="Title"
+          onChangeText={setTitle}
+          maxLength={20}
+        />
         <Dialog.Input
           value={description}
           label="Description"
           onChangeText={setDescription}
+          maxLength={20}
         />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
         <Dialog.Button label="Edit" onPress={handleEdit} />

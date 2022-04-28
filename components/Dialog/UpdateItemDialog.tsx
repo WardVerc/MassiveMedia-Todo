@@ -33,11 +33,15 @@ const UpdateItemDialog: React.FC<UpdateItemDialogProps> = ({
   };
 
   const handleEdit = async () => {
-    // add validation, min 3 char for title
-    await updateItem(itemId, listId, description);
-    // if (!error) {
-    getList(listId);
-    closeDialog();
+    if (description.trim().length > 0) {
+      await updateItem(itemId, listId, description.trim());
+      // if (!error) {
+      getList(listId);
+      closeDialog();
+      // }
+    } else {
+      alert("Enter a description");
+    }
   };
 
   if (isLoading) {
@@ -72,6 +76,7 @@ const UpdateItemDialog: React.FC<UpdateItemDialogProps> = ({
           value={description}
           label="Description"
           onChangeText={setDescription}
+          maxLength={20}
         />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
         <Dialog.Button label="Edit" onPress={handleEdit} />

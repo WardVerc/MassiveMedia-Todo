@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { styles } from "./ListDetails.styles";
 import { ListDetailsNavigationProps } from "../../App";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import DeleteListDialog from "../Dialog/DeleteListDialog";
 import UpdateListDialog from "../Dialog/UpdateListDialog";
 import useGetList from "../../hooks/list/useGetList";
 import AddItemDialog from "../Dialog/AddItemDialog";
 import Item from "../Item/Item";
+import ListDetailsHeader from "./ListDetailsHeader/ListDetailsHeader";
 
 const ListDetails: React.FC<ListDetailsNavigationProps> = ({
   navigation,
@@ -73,26 +73,12 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
   return (
     <View style={styles.container}>
       {renderDialogs()}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.headerText}>{title}</Text>
-          <Text>{description}</Text>
-        </View>
-        <View style={styles.actionsContainer}>
-          <MaterialIcons
-            style={styles.icon}
-            name="edit"
-            size={30}
-            onPress={() => setIsUpdateVisible(true)}
-          />
-          <MaterialIcons
-            style={styles.icon}
-            name="delete"
-            size={30}
-            onPress={() => setIsDeleteVisible(true)}
-          />
-        </View>
-      </View>
+      <ListDetailsHeader
+        title={title}
+        description={description}
+        setIsDeleteVisible={setIsDeleteVisible}
+        setIsUpdateVisible={setIsUpdateVisible}
+      />
       <ScrollView contentContainerStyle={styles.itemsContainer}>
         {items.map((item) => {
           return (

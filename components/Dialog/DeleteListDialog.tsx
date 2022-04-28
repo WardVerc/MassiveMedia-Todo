@@ -27,6 +27,7 @@ const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
     // if (!error) {
     closeDialog();
     navigateToLists();
+    // }
   };
 
   if (isLoading) {
@@ -39,6 +40,7 @@ const DeleteListDialog: React.FC<DeleteListDialogProps> = ({
     );
   }
 
+  // never shown, wonder why
   if (error) {
     return (
       <View>
