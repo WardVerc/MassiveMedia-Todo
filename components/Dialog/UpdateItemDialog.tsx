@@ -1,34 +1,43 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Dialog from "react-native-dialog";
-import useAddItem from "../../hooks/item/useAddItem";
+import useUpdateItem from "../../hooks/item/useUpdateItem";
 
-interface AddItemDialogProps {
+interface UpdateItemDialogProps {
   visible: boolean;
   setVisible: (bool: boolean) => void;
   listId: number;
+  itemId: number;
+  originalDescription: string;
   getList: (listId: number) => void;
 }
 
-const AddItemDialog: React.FC<AddItemDialogProps> = ({
+const UpdateItemDialog: React.FC<UpdateItemDialogProps> = ({
   visible,
   setVisible,
   listId,
+  itemId,
+  originalDescription,
   getList,
 }) => {
-  const [description, setDescription] = useState("");
-  const { addItem, isLoading, error } = useAddItem();
+  const [description, setDescription] = useState(originalDescription);
+  const { updateItem, isLoading, error } = useUpdateItem();
 
   const closeDialog = () => {
-    setDescription("");
     setVisible(false);
   };
 
-  const handleAdd = async () => {
-    await addItem(listId, description);
-    // if (!error) {
+  const handleCancel = () => {
+    setDescription(originalDescription); //doesn't work
     closeDialog();
+  };
+
+  const handleEdit = async () => {
+    // add validation, min 3 char for title
+    await updateItem(itemId, listId, description);
+    // if (!error) {
     getList(listId);
+    closeDialog();
   };
 
   if (isLoading) {
@@ -41,7 +50,7 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
     );
   }
 
-  // can't figure out error handling for create list
+  // can't figure out error handling for update list
   if (error) {
     return (
       <View>
@@ -49,7 +58,7 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
           <Dialog.Description>
             An error has occurred. Please try again.
           </Dialog.Description>
-          <Dialog.Button label="Cancel" onPress={closeDialog} />
+          <Dialog.Button label="Cancel" onPress={handleCancel} />
         </Dialog.Container>
       </View>
     );
@@ -58,17 +67,17 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
   return (
     <View>
       <Dialog.Container visible={visible}>
-        <Dialog.Title>Add an item</Dialog.Title>
+        <Dialog.Title>Edit item</Dialog.Title>
         <Dialog.Input
           value={description}
           label="Description"
           onChangeText={setDescription}
         />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
-        <Dialog.Button label="Add" onPress={handleAdd} />
+        <Dialog.Button label="Edit" onPress={handleEdit} />
       </Dialog.Container>
     </View>
   );
 };
 
-export default AddItemDialog;
+export default UpdateItemDialog;

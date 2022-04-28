@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import { styles } from "./ListDetails.styles";
 import { ListDetailsNavigationProps } from "../../App";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -46,6 +46,7 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
           visible={isAddItemVisible}
           setVisible={setIsAddItemVisible}
           listId={route.params.list.listId}
+          getList={getList}
         />
       </>
     );
@@ -92,11 +93,18 @@ const ListDetails: React.FC<ListDetailsNavigationProps> = ({
           />
         </View>
       </View>
-      <View style={styles.itemsContainer}>
+      <ScrollView contentContainerStyle={styles.itemsContainer}>
         {items.map((item) => {
-          return <Item item={item} key={item.itemId} />;
+          return (
+            <Item
+              item={item}
+              key={item.itemId}
+              listId={route.params.list.listId}
+              getList={getList}
+            />
+          );
         })}
-      </View>
+      </ScrollView>
       <Button title="Add an item" onPress={() => handlePress()} />
     </View>
   );
