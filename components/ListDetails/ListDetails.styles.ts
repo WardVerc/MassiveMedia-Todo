@@ -10,9 +10,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
+    borderBottomWidth: 2,
   },
   itemsContainer: {
     padding: 10,
+    alignItems: "center",
   },
   headerText: {
     fontSize: 20,

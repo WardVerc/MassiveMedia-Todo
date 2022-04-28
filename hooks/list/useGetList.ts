@@ -31,6 +31,7 @@ const useGetList = (listId: number) => {
              items {
                itemId
                description
+               done
              }
            }  
            }`,
