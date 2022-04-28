@@ -9,4 +9,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "100%",
+    position: "absolute",
+  },
 });
