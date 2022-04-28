@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { styles } from "./Header.styles";
+import { styles } from "./ListsHeader.styles";
 
-const Header: React.FC = () => {
+const ListsHeader: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Hello, Massive Media!</Text>
@@ -10,4 +10,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default ListsHeader;

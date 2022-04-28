@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button, ScrollView, Text, View } from "react-native";
 import { styles } from "./Lists.styles";
 import CreateListDialog from "../Dialog/CreateListDialog";
-import Header from "../Header/Header";
+import ListsHeader from "./ListsHeader/ListsHeader";
 import List from "../List/List";
 import useGetAllLists from "../../hooks/useGetAllLists";
 import { ListsNavigationProps } from "../../App";
@@ -35,8 +35,7 @@ const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
       <View style={styles.container}>
         <Text>The following error has occured:</Text>
         <Text>{error}</Text>
-        {/* user shouldnt need to restart app if error */}
-        <Text>Please restart the app.</Text>
+        <Text>Please try again.</Text>
       </View>
     );
   }
@@ -45,7 +44,7 @@ const Lists: React.FC<ListsNavigationProps> = ({ navigation, route }) => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View>
-        <Header />
+        <ListsHeader />
         <CreateListDialog
           visible={visible}
           setVisible={setVisible}

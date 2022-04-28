@@ -25,10 +25,15 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
   };
 
   const handleAdd = async () => {
-    await addItem(listId, description);
-    // if (!error) {
-    closeDialog();
-    getList(listId);
+    if (description.trim().length > 0) {
+      await addItem(listId, description.trim());
+      // if (!error) {
+      closeDialog();
+      getList(listId);
+      // }
+    } else {
+      alert("Enter a description");
+    }
   };
 
   if (isLoading) {
@@ -41,7 +46,7 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
     );
   }
 
-  // can't figure out error handling for create list
+  //error is never shown ?
   if (error) {
     return (
       <View>
@@ -63,6 +68,7 @@ const AddItemDialog: React.FC<AddItemDialogProps> = ({
           value={description}
           label="Description"
           onChangeText={setDescription}
+          maxLength={20}
         />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
         <Dialog.Button label="Add" onPress={handleAdd} />

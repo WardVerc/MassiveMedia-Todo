@@ -4,8 +4,6 @@ const useUpdateList = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // updateList() gives a warning "can't perform a react state update on an unmounted component"
-  // was happening when trying to catch errors
   const updateList = async (
     listId: number,
     title: string,
@@ -24,8 +22,9 @@ const useUpdateList = () => {
            }  
            }`,
       }),
-    }).then((response) => response.json());
-    // .catch((err) => setError(err.message)); gives problems
+    })
+      .then((response) => response.json())
+      .catch((err) => setError(err.message));
     setLoading(false);
   };
 

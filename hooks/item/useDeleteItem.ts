@@ -4,8 +4,6 @@ const useDeleteItem = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // deleteItem() gives a warning "can't perform a react state update on an unmounted component"
-  // was happening when trying to catch errors
   const deleteItem = async (itemId: number, listId: number) => {
     setError("");
     setLoading(true);
@@ -23,8 +21,9 @@ const useDeleteItem = () => {
          }
          }`,
       }),
-    }).then((response) => response.json());
-    // .catch((err) => setError(err.message)); gives problems
+    })
+      .then((response) => response.json())
+      .catch((err) => setError(err.message));
     setLoading(false);
   };
 

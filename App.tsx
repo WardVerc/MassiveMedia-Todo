@@ -10,7 +10,7 @@ import { ListType } from "./hooks/useGetAllLists";
 
 export type StackParamList = {
   Lists: undefined;
-  ListDetails: { list: ListType };
+  "List details": { list: ListType };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -21,15 +21,19 @@ export type ListsNavigationProps = NativeStackScreenProps<
 >;
 export type ListDetailsNavigationProps = NativeStackScreenProps<
   StackParamList,
-  "ListDetails"
+  "List details"
 >;
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Lists">
-        <Stack.Screen name="Lists" component={Lists} />
-        <Stack.Screen name="ListDetails" component={ListDetails} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Lists"
+          component={Lists}
+        />
+        <Stack.Screen name="List details" component={ListDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

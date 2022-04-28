@@ -25,11 +25,15 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
   };
 
   const handleAdd = async () => {
-    // add validation, min 3 char for title
-    await createList(title, description);
-    // if (!error) {
-    closeDialog();
-    getLists();
+    if (title.trim().length > 0) {
+      await createList(title.trim(), description.trim());
+      // if (!error) {
+      closeDialog();
+      getLists();
+      // }
+    } else {
+      alert("Enter a title");
+    }
   };
 
   if (isLoading) {
@@ -42,7 +46,7 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
     );
   }
 
-  // can't figure out error handling for create list
+  // can't figure out error handling
   if (error) {
     return (
       <View>
@@ -60,11 +64,17 @@ const CreateListDialog: React.FC<CreateListDialogProps> = ({
     <View>
       <Dialog.Container visible={visible}>
         <Dialog.Title>Create a list</Dialog.Title>
-        <Dialog.Input value={title} label="Title" onChangeText={setTitle} />
+        <Dialog.Input
+          value={title}
+          label="Title"
+          onChangeText={setTitle}
+          maxLength={20}
+        />
         <Dialog.Input
           value={description}
           label="Description"
           onChangeText={setDescription}
+          maxLength={20}
         />
         <Dialog.Button label="Cancel" onPress={closeDialog} />
         <Dialog.Button label="Add" onPress={handleAdd} />
