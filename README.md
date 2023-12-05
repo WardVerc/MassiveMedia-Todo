@@ -1,6 +1,6 @@
 # MassiveMedia-Todo
 
-Todo-list-app. Engineering coding challenge.
+Todo-list-app. Trying out React Native and graphql.
 
 Todo:
 
